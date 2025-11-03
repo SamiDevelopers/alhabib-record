@@ -1,5 +1,5 @@
 // ضع هنا رابط Web App الخاص بـ Google Apps Script بعد نشره
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzfYPljEuwSAqirfhISbaLwjzwEms0t8QOxe0xs2ztwt7aD0ygVjssQSBisi4pFc5Gl/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxLnD9Jfb3H04_Mf-5VH69UIvd91A13wkEviBqHO02ptGQeEnSm5--3mlrlD2m4IMR5/exec";
 
 function generateCode(len = 8) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
