@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نموذج تسجيل الدارسين - مركز الحبيب</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>نموذج تسجيل الدارِس</h1>
+
+    <form id="registrationForm" autocomplete="off">
+      <div class="row">
+        <label>نوع الدارس</label>
+        <select id="studentType" required>
+          <option value="دارس جديد">دارس جديد</option>
+          <option value="دارس قديم">دارس قديم</option>
+        </select>
+      </div>
+
+      <div class="row code-row">
+        <label>كود الدارس</label>
+        <input type="text" id="studentCode" readonly />
+        <button type="button" id="regenCodeBtn">توليد كود</button>
+      </div>
+
+      <div class="row">
+        <label>اسم الدارس بالكامل</label>
+        <input type="text" id="fullName" required />
+      </div>
+
+      <div class="row">
+        <label>النوع</label>
+        <div class="inline">
+          <label><input type="radio" name="gender" value="ذكر" checked /> ذكر</label>
+          <label><input type="radio" name="gender" value="أنثي" /> أنثي</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <label>تاريخ الميلاد</label>
+        <input type="date" id="birthDate" />
+      </div>
+
+      <div class="row">
+        <label>المرحلة الدراسية</label>
+        <select id="stage" required>
+          <option value="KG1">KG1</option>
+          <option value="KG2">KG2</option>
+          <option value="الصف الأول الأبتدائي">الصف الأول الأبتدائي</option>
+          <option value="الصف الثاني الأبتدائي">الصف الثاني الأبتدائي</option>
+          <option value="الصف الثالث الأبتدائي">الصف الثالث الأبتدائي</option>
+          <option value="الصف الرابع الأبتدائي">الصف الرابع الأبتدائي</option>
+          <option value="الصف الخامس الأبتدائي">الصف الخامس الأبتدائي</option>
+          <option value="الصف السادس الأبتدائي">الصف السادس الأبتدائي</option>
+          <option value="الصف الأول الأعدادي">الصف الأول الأعدادي</option>
+          <option value="الصف الثاني الأعدادي">الصف الثاني الأعدادي</option>
+          <option value="الصف الثالث الأعدادي">الصف الثالث الأعدادي</option>
+          <option value="الصف الأول الثانوي">الصف الأول الثانوي</option>
+          <option value="الصف الثاني الثانوي">الصف الثاني الثانوي</option>
+          <option value="الصف الثالث الثانوي">الصف الثالث الثانوي</option>
+          <option value="شباب">شباب</option>
+          <option value="خريجين">خريجين</option>
+          <option value="أولياء أمور">أولياء أمور</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>رقم الهاتف</label>
+        <input type="tel" id="phone" />
+      </div>
+
+      <div class="row">
+        <label>رقم الواتس</label>
+        <input type="tel" id="whatsapp" />
+      </div>
+
+      <div class="row">
+        <label>حرف الفصل</label>
+        <input type="text" id="classLetter" maxlength="2" />
+      </div>
+
+      <div class="row">
+        <label>الفصل داخل المركز</label>
+        <select id="centerClass">
+          <option value="تمهيدي">تمهيدي</option>
+          <option value="أولي وثانية">أولي وثانية</option>
+          <option value="ثالثة ورابعة">ثالثة ورابعة</option>
+          <option value="خامسة وسادسة">خامسة وسادسة</option>
+          <option value="أعدادي - ثانوي">أعدادي - ثانوي</option>
+          <option value="شباب وخريجين">شباب وخريجين</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>رتبة الشماسية</label>
+        <select id="rank">
+          <option value="أبصالطس">أبصالطس</option>
+          <option value="أغنسطس">أغنسطس</option>
+          <option value="لم يتم الرسامة">لم يتم الرسامة</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label>العنوان</label>
+        <textarea id="address" rows="2"></textarea>
+      </div>
+
+      <fieldset class="checkbox-group">
+        <legend>الاستمارة / الصورة / قيمة الاستمارة</legend>
+        <label><input type="checkbox" id="formCheckbox" /> الاستمارة</label>
+        <label><input type="checkbox" id="photoCheckbox" /> الصورة</label>
+        <label><input type="checkbox" id="feeCheckbox" /> قيمة الاستمارة</label>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" id="submitBtn">إرسال</button>
+        <button type="reset" id="resetBtn">تفريغ</button>
+      </div>
+
+      <p id="status" class="status"></p>
+    </form>
+
+    <section class="example">
+      <h2>مثال سطر يُضاف للشيت</h2>
+      <pre id="exampleRow">1	دارس جديد	DQ34ZA54	كارن ميخائيل فؤاد	أنثي	19 نوفمبر 2019	KG1	01211650145		A	تمهيدي	------------------		TRUE	TRUE	TRUE</pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
