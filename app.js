@@ -1,76 +1,53 @@
-// ضع هنا رابط Web App الخاص بـ Google Apps Script بعد نشره
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxLnD9Jfb3H04_Mf-5VH69UIvd91A13wkEviBqHO02ptGQeEnSm5--3mlrlD2m4IMR5/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxOuOBPevjWg_Gd842YRPgWu9qpcIW_hZJY5Bynf2RJBcz3cjMtZIdJa4QRdUJINLA/exec"; // استبدله بالرابط الجديد بعد إعادة النشر
 
-function generateCode(len = 8) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let s = "";
-  for (let i = 0; i < len; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
-  return s;
-}
+const form = document.getElementById("studentForm");
+const responseMsg = document.getElementById("responseMessage");
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("registrationForm");
-  const regenBtn = document.getElementById("regenCodeBtn");
-  const codeInput = document.getElementById("studentCode");
-  const status = document.getElementById("status");
+// توليد كود فريد
+document.getElementById("generateCode").addEventListener("click", () => {
+  const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+  document.getElementById("studentCode").value = code;
+});
 
-  // توليد كود تلقائي عند التحميل
-  codeInput.value = generateCode();
+// عند إرسال النموذج
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  regenBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    codeInput.value = generateCode();
-  });
+  const data = {
+    studentType: document.getElementById("studentType").value,
+    studentCode: document.getElementById("studentCode").value,
+    fullName: document.getElementById("fullName").value,
+    gender: document.querySelector('input[name="gender"]:checked')?.value || "",
+    birthDate: document.getElementById("birthDate").value,
+    stage: document.getElementById("stage").value,
+    phone: document.getElementById("phone").value,
+    whatsapp: document.getElementById("whatsapp").value,
+    classLetter: document.getElementById("classLetter").value,
+    centerClass: document.getElementById("centerClass").value,
+    rank: document.getElementById("rank").value,
+    address: document.getElementById("address").value,
+    formCheckbox: document.getElementById("formCheckbox").checked,
+    photoCheckbox: document.getElementById("photoCheckbox").checked,
+    feeCheckbox: document.getElementById("feeCheckbox").checked,
+  };
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    status.textContent = "جاري الإرسال...";
+  responseMsg.textContent = "⏳ جاري الإرسال...";
+  responseMsg.style.color = "#7d1717";
 
-    // جمع القيم
-    const data = {
-      studentType: document.getElementById("studentType").value,
-      studentCode: document.getElementById("studentCode").value.trim().toUpperCase(),
-      fullName: document.getElementById("fullName").value.trim(),
-      gender: document.querySelector('input[name="gender"]:checked').value,
-      birthDate: document.getElementById("birthDate").value, // بصيغة yyyy-mm-dd
-      stage: document.getElementById("stage").value,
-      phone: document.getElementById("phone").value.trim(),
-      whatsapp: document.getElementById("whatsapp").value.trim(),
-      classLetter: document.getElementById("classLetter").value.trim().toUpperCase(),
-      centerClass: document.getElementById("centerClass").value,
-      rank: document.getElementById("rank").value,
-      address: document.getElementById("address").value.trim(),
-      formCheckbox: document.getElementById("formCheckbox").checked ? "TRUE" : "FALSE",
-      photoCheckbox: document.getElementById("photoCheckbox").checked ? "TRUE" : "FALSE",
-      feeCheckbox: document.getElementById("feeCheckbox").checked ? "TRUE" : "FALSE"
-    };
-
-    // تحقق بسيط
-    if (!data.fullName) {
-      status.textContent = "الرجاء إدخال اسم الدارس.";
-      return;
-    }
-
-    try {
-      const res = await fetch(WEBAPP_URL, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      const result = await res.json();
-      if (result && result.status === "success") {
-        status.textContent = "تم التسجيل بنجاح ✅";
-        form.reset();
-        codeInput.value = generateCode();
-      } else {
-        console.error("response:", result);
-        status.textContent = "حدث خطأ أثناء الإرسال. راجع إعدادات Web App.";
-      }
-    } catch (err) {
-      console.error(err);
-      status.textContent = "خطأ في الاتصال. تأكد من رابط Web App وإعدادات النشر.";
-    }
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" },
+  })
+  .then((res) => res.json())
+  .then(() => {
+    responseMsg.textContent = "✅ تم تسجيل البيانات بنجاح";
+    responseMsg.style.color = "green";
+    form.reset();
+  })
+  .catch((err) => {
+    console.error(err);
+    responseMsg.textContent = "❌ خطأ في الاتصال. تأكد من رابط Web App وإعدادات النشر.";
+    responseMsg.style.color = "red";
   });
 });
